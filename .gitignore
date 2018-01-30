@@ -1,0 +1,9 @@
+node_modules/
+npm-debug.log
+*.swp
+.DS_Store
+dist/
+build/
+.idea
+dist_sage2app/
+dist_mods/
