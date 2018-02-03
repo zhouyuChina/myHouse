@@ -1,7 +1,7 @@
 // webpack.config.js 
-var path = require('path');
-var htmlWebpackPlugin = require('html-webpack-plugin');
-var cleanWebpackPlugin = require('clean-webpack-plugin');
+const path = require('path');
+const htmlWebpackPlugin = require('html-webpack-plugin');
+const cleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: path.resolve(__dirname, './src/js/app.js'),
