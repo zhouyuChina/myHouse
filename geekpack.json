@@ -1,0 +1,11 @@
+{
+  "appname": "studyWebpack",
+  "type": "multipages",
+  "pages": [
+    "index",
+    "map",
+    "myHouse",
+    "myLoveTBQ"
+  ],
+  "version": "0.9.1"
+}

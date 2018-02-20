@@ -6,7 +6,7 @@
   "scripts": {
     "server": "node server.js",
     "build": "webpack",
-    "dev": "webpack-dev-server"
+    "dev": "webpack-dev-server --open"
   },
   "author": "",
   "private": true,

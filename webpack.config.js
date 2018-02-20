@@ -1,30 +1,43 @@
 // webpack.config.js 
-const path = require('path');
-const htmlWebpackPlugin = require('html-webpack-plugin');
-const cleanWebpackPlugin = require('clean-webpack-plugin');
+let path = require('path');
+let htmlWebpackPlugin = require('html-webpack-plugin');
+let cleanWebpackPlugin = require('clean-webpack-plugin');
+let pagesList = require('./geekpack.json');
+let entryItem = {};
+let htmlArray = [
+  new cleanWebpackPlugin(
+    ['./build'], //匹配要删除的文件，这里则指定每次对dist文件夹进行清理 
+    {
+      root: __dirname,//指定插件根目录位置 
+      verbose: true, //开启在控制台输出信息 
+      dry: false //启用删除文件 
+    })
+]
+
+pagesList.pages.forEach((item) => {
+  entryItem[item] = `./src/pages/${item}/app.js`;
+  let htmlPlugin = new htmlWebpackPlugin({
+    template: `./src/pages/${item}/index.html`,
+    //定义插件读取的模板文件是根目录下的index.html 
+    filename: `${item}.html`,
+    //定义通过模板文件新生成的页面名称
+    chunks: [`${item}`],
+  });
+  htmlArray.push(htmlPlugin);
+});
 
 module.exports = {
-  entry: path.resolve(__dirname, './src/js/app.js'),
+  //entry: path.resolve(__dirname, './src/js/app.js'),
   //指定webpack打包的入口是app.js 
+  entry: entryItem,
   output: {
     path: path.resolve(__dirname, './build'),
     //指定打包后js文件放置的位置 
-    filename: 'js/bundle-[hash].js'
+    // filename: 'js/[name]/bundle-[hash].js'
+    filename: '[name].[chunkhash].bundle.js?'
     //指定打包后的js名称，这个就是index.html最终引入的js的名称 
   },
-  plugins: [
-    new htmlWebpackPlugin({
-      template: 'index.html',
-      //定义插件读取的模板文件是根目录下的index.html filename:'index.html'//定义通过模板文件新生成的页面名称 
-    }),
-    new cleanWebpackPlugin(
-      ['./build'], //匹配要删除的文件，这里则指定每次对dist文件夹进行清理 
-      {
-        root: __dirname,//指定插件根目录位置 
-        verbose: true, //开启在控制台输出信息 
-        dry: false //启用删除文件 
-      }),
-  ],
+  plugins: htmlArray,
   module: {
     rules: [
       {
@@ -57,7 +70,7 @@ module.exports = {
           options: {
             name: '[hash].[ext]',
             limit: 10240,
-            outputPath: 'assets/',
+            outputPath: 'img/',
             //定义图片输出存放的文件夹位置
             useRelativePath: true,
             //设置路径为相对位置 
