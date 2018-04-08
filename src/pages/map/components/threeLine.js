@@ -7,6 +7,7 @@ export class lineObject {
   constructor() {
     this.stats = new Stats();
     this.step = 0;
+    this.init();
   }
 
   buildModel1() {
